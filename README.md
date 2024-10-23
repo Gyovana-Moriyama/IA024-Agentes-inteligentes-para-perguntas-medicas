@@ -45,16 +45,27 @@ ReAct > CoT: ReAct com desempenho superior ao CoT, uma vez que ele tem acesso ao
 ## Referências
 
 [1] Wu, Chaoyi, et al. "PMC-LLaMA: toward building open-source language models for medicine." Journal of the American Medical Informatics Association (2024): ocae045.
+
 [2] Wang, Yubo, Xueguang Ma, and Wenhu Chen. "Augmenting black-box llms with medical textbooks for clinical question answering." arXiv preprint arXiv:2309.02233 (2023).
+
 [3] Jin, Di, et al. "What disease does this patient have? a large-scale open domain question answering dataset from medical exams." Applied Sciences 11.14 (2021): 6421.
+
 [4] Kung, Tiffany H., et al. "Performance of ChatGPT on USMLE: potential for AI-assisted medical education using large language models." PLoS digital health 2.2 (2023): e0000198.
+
 [5] Xiong, Guangzhi, et al. "Improving Retrieval-Augmented Generation in Medicine with Iterative Follow-up Questions." arXiv preprint arXiv:2408.00727 (2024).
+
 [6] Jeong, Minbyul, et al. "Improving medical reasoning through retrieval and self-reflection with retrieval-augmented large language models." Bioinformatics 40.Supplement_1 (2024): i119-i129.
+
 [7] Z. Hammane, F. -E. Ben-Bouazza and A. Fennan, "SelfRewardRAG: Enhancing Medical Reasoning with Retrieval-Augmented Generation and Self-Evaluation in Large Language Models," 2024 International Conference on Intelligent Systems and Computer Vision (ISCV), Fez, Morocco, 2024, pp. 1-8
+
 [8] Saab, Khaled, et al. "Capabilities of gemini models in medicine." arXiv preprint arXiv:2404.18416 (2024).
+
 [9] Nori, Harsha, et al. "Can generalist foundation models outcompete special-purpose tuning? case study in medicine." arXiv preprint arXiv:2311.16452 (2023).
+
 [10] Liévin, Valentin, et al. "Can large language models reason about medical questions?." Patterns 5.3 (2024).
+
 [11] https://www.usmle.org/scores-transcripts 
+
 [12] https://paperswithcode.com/sota/question-answering-on-medqa-usmle
 
 
