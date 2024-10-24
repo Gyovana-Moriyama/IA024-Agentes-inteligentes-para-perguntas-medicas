@@ -30,15 +30,9 @@ Utilizado para avaliação dos sistemas. O dataset é composto por 12,723 pergun
 
 A métrica a ser utilizada é a acurácia, a qual corresponde à porcentagem de questões corretamente respondidas.
 
-O baseline a ser comparado será a acurácia mínima de 60% para aprovação no exame.
-
-O benchmark encontrado é de 91.1% de acurácia utilizando o Med-Gemini e 90.2% utilizando o GPT-4.
-
 ## Resultados
 
 ### Resultados esperados
-
-Aprovação no exame: acurácia de pelo menos 60% nos dois sistemas.
 
 ReAct > CoT: ReAct com desempenho superior ao CoT, uma vez que ele tem acesso ao conhecimento necessário para responder às perguntas
 
