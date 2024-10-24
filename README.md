@@ -6,7 +6,7 @@ LLMs que utilizam ReAct são mais precisas do que modelos com apenas Chain-of-Th
 
 ## Objetivo
 
-Comparar o desempenho de dois sistemas baseados em agentes utilizando um modelo de linguagem pré-treinado (LLM) para responder perguntas do domínio médico. Um sistema será construído com CoT, que gera raciocínios passo a passo, e o outro com ReAct, que combina raciocínio e ações interativas. 
+Avaliar o desempenho dos dois sistemas, um que gera raciocínios passo a passo, e outro que combina raciocínio e ações interativas, na tarefa de question answering (QA) em perguntas do exame USMLE a fim de comparar a acurácia de ambos.
 
 ## Metodologia
 
