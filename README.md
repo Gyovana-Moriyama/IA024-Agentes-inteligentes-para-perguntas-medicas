@@ -1,4 +1,4 @@
-# Agentes inteligentes para respostas a perguntas médicas
+# Sistemas inteligentes para respostas a perguntas médicas
 
 ## Pergunta
 
