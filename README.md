@@ -62,4 +62,4 @@ ReAct > CoT: ReAct com desempenho superior ao CoT, uma vez que ele tem acesso ao
 
 [12] https://paperswithcode.com/sota/question-answering-on-medqa-usmle
 
-
+[13] https://huggingface.co/datasets/GBaker/MedQA-USMLE-4-options
