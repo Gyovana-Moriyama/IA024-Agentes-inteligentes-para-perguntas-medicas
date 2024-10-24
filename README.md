@@ -14,7 +14,9 @@ Modelo pré-treinado: GPT-4
 
 Cada sistema será avaliado nas questões do exame USMLE (US Medical Licensing Examination). Esse exame é composto por três etapas de questôes de múltipla escolha.
 
-CoT e ReAct serão utilizados para geração de passos de raciocínio para responder às perguntas; _Retrieval-augmented generation_ (RAG) como ferramenta para enriquecimento dos contextos.
+CoT: Uso de prompts para instruir o modelo a gerar passos de raciocínio para responder às perguntas.
+
+ReAct: CoT + _Retrival-augmented generation_ (RAG). Instrução ao modelo para repetir ciclos de raciocínio, ação e observação para tomada de decisão.
 
 ## Datasets
 
