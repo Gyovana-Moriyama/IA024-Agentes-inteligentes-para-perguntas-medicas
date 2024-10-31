@@ -1,22 +1,14 @@
 # Sistemas inteligentes para respostas a perguntas médicas
 
-## Pergunta
+## Hipótese
 
-LLMs que utilizam ReAct são mais precisas do que modelos com apenas Chain-of-Thought (CoT) ao responder perguntas do domínio médico?
+LLMs com acesso a informações extras são mais precisas do que modelos que dependem apenas de sua memória ao responder perguntas do domínio médico.
 
 ## Objetivo
 
 Avaliar o desempenho de dois sistemas, um que gera raciocínios passo a passo, e outro que combina raciocínio e ações interativas, na tarefa de question answering (QA) em perguntas do exame USMLE a fim de comparar a acurácia de ambos.
 
-## Metodologia
-
-Modelo pré-treinado: GPT-4
-
-Cada sistema será avaliado nas questões do exame USMLE (US Medical Licensing Examination). Esse exame é composto por três etapas de questôes de múltipla escolha.
-
-CoT: Uso de prompts para instruir o modelo a gerar passos de raciocínio para responder às perguntas.
-
-ReAct: CoT + _Retrival-augmented generation_ (RAG). Instrução ao modelo para repetir ciclos de raciocínio, ação e observação para tomada de decisão.
+A métrica de avaliação a ser utilizada é a acurácia, a qual corresponde à porcentagem de questões corretamente respondidas.
 
 ## Datasets
 
@@ -28,15 +20,103 @@ Utilizado para recuperação de contextos. É composto por 18 arquivos de texto,
 
 Utilizado para avaliação dos sistemas. O dataset é composto por 12,723 perguntas de múltipla escolha. Além da questão, são fornecidas quatro alternativas, seguida da resposta.
 
-## Métrica de avaliação
+## Metodologia
 
-A métrica a ser utilizada é a acurácia, a qual corresponde à porcentagem de questões corretamente respondidas.
+Modelo pré-treinado: GPT-4o-mini
+Hardware: Google Colab
 
+Cada sistema será avaliado nas questões do exame USMLE (US Medical Licensing Examination). Esse exame é composto por três etapas de questôes de múltipla escolha.
+
+CoT: Uso de prompts para instruir o modelo a gerar passos de raciocínio para responder às perguntas.
+
+ReAct: CoT + _Retrival-augmented generation_ (RAG). Instrução ao modelo para repetir ciclos de raciocínio, ação e observação para tomada de decisão.
+
+### Exploração dos datasets
+
+**MedQA-USMLE-4-options:**
+
+* Utilizado dataset disponível no HuggingFace.
+* Dataset de teste composto por 1273 perguntas, sendo 679 da step 1 e 594 das steps 2 e 3.
+* Perguntas + opções possuem tamanho médio de 888.60 caracteres.
+
+**MedQA:** 
+
+* Utilizado dataset disponível no drive do artigo.
+* Dataset composto por 18 livros texto.
+* Tamanho médio de 4,951,794.67 caracteres e 11,851.67 parágrafos por livro texto. 
+
+### Implementação
+
+GPT-4o-mini com temperatura de 0.5, no Google Colab
+
+**Baselines:**
+
+Implementação de duas baselines para comparação:
+
+1. Respostas aleatórias;
+2. Pergunta direta, sem aplicação de técnicas de engenharia de prompt.
+
+Prompt:
+
+```
+question: {question}
+options: {options}
+Among A through D, the answer is: <answer>
+
+```
+
+**Chain-of-thought:**
+
+Raciocínio passo-a-passo com chain-of-thought utilizando um prompt adaptado de [10].
+
+Configuração zero-shot.
+
+Prompt:
+
+```
+Answer the question below.
+
+Question: {question}
+Options: {options}
+
+Answer: Let's think step-by-step...
+```
+ 
 ## Resultados
 
 ### Resultados esperados
 
 ReAct > CoT: ReAct com desempenho superior ao CoT, uma vez que ele tem acesso ao conhecimento necessário para responder às perguntas
+
+### Resultados preliminares - entrega 2
+
+#### Acurácia
+
+![gráfico de acurácia](entrega2/acuracia.png)
+
+Gráfico comparando a acurácia da resposta aleatória, pergunta direta, CoT e os dois benchmarks.
+
+#### Exemplos de respostas CoT
+
+Q: A 40-year-old man is referred to an optometrist. He complains of mild vision impairment over the last 6 months. His vision has continued to slowly deteriorate and his condition is now affecting his night driving. Past medical history is significant for well-controlled schizophrenia. He takes a low-potency typical antipsychotics and a multivitamin every day. He has been compliant with his medication and has regular follow-up visits. What is the best first step in the management of this patient’s symptoms?
+
+A) Decrease medication dosage
+
+B) Reassurance
+
+C) Ocular examination under anesthesia
+
+**D) Slit-lamp examination**
+
+A:
+1. The patient is experiencing mild vision impairment that has been progressively worsening, particularly affecting his night driving. This suggests a potential ocular issue that needs to be evaluated.
+2. Given the patient's age and the nature of his symptoms, it is important to conduct a thorough ocular examination to identify any underlying conditions, such as cataracts or other retinal issues.
+3. A slit-lamp examination is a non-invasive procedure that allows for detailed visualization of the anterior segment of the eye, which can help diagnose various ocular conditions.
+4. Decreasing the medication dosage (Option A) might not address the underlying cause of the vision impairment and could worsen his psychiatric condition. 
+5. Reassurance (Option B) is not sufficient without a proper evaluation of the cause of vision changes.
+6. Ocular examination under anesthesia (Option C) is typically reserved for more complex cases or when a detailed examination cannot be performed awake, which is not indicated initially in this scenario.
+7. **Therefore, the best first step is to conduct a slit-lamp examination (Option D) to assess the patient's ocular health.**
+
 
 ## Referências
 
