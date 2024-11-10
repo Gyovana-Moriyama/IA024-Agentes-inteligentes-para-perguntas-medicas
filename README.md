@@ -81,6 +81,51 @@ Options: {options}
 
 Answer: Let's think step-by-step...
 ```
+
+**ReAct**
+
+O ReAct é um método que combina raciocínio (CoT) com recuperação de informações (RAG). O modelo realiza ciclos de raciocínio e consulta ao banco de dados (MedQA) antes de tomar uma decisão final, o que permite respostas mais contextualizadas.
+
+A parte de _reasoning_, ou seja, a parte do racicínio é baseada no CoT. Já a parte de _acting_, é a busca na base de livros-textos com RAG. 
+
+O RAG implementado utiliza o _RecursiveCharacterTextSplitter_ do _Langchain_ como separador de texto e Similarity Search do FAISS como recuperador de informação.
+
+Para a escolha do recuperador de informação de da melhor configuração do separador, foram feitas comparações utilizando 50 perguntas aleaórias da amostra do dataset de treino. Foi comparado combinações de _chunk_size_ e _overlap_size_ do separador de texto com dois recuperadores, o Similarity Search do FAISS e o BM25 Okapi. Para avaliar essas combinações, foi utlizada a acurácia nas questões e o _context relevance_ com RAGAS nos contextos recuperados.
+
+Prompt ReAct:
+
+```
+Solve the question answering task alternating between Question, Thought, Action, Input and Observation steps.
+You only have access to the following tools: {tools}
+
+Use the following format:
+Question: the input question you must answer
+Thought: you should always think about what to do. Break the problem down into subproblems and smaller steps and decide which action to take.
+Action: the action to take, must be one of [{tool_names}]. If no action is needed, return your Final answer instead.
+Action Input: the input to the action
+Observation: the output of the action.
+... (this Thought/Action/Action Input/Observation can repeat any number of times)
+Final Answer: A/B/C/D
+
+Begin!
+Question: {question}
+Options: {options}
+Thought: {agent_scratchpad}
+
+```
+
+Prompt para RAGAS, _Context Relevance_
+
+```
+Please extract relevant sentences from the provided context that can potentially help answer the following question.
+If no relevant sentences are found, or if you believe the question cannot be answered from the given context, return the phrase "Insufficient Information".
+
+While extracting candidate sentences you’re not allowed to make any changes to sentences from given context.
+
+Here is the context: {context}
+And here is the question: {question}
+
+```
  
 ## Resultados
 
@@ -98,6 +143,7 @@ Gráfico comparando a acurácia da resposta aleatória, pergunta direta, CoT e o
 
 #### Exemplos de respostas CoT
 
+```
 Q: A 40-year-old man is referred to an optometrist. He complains of mild vision impairment over the last 6 months. His vision has continued to slowly deteriorate and his condition is now affecting his night driving. Past medical history is significant for well-controlled schizophrenia. He takes a low-potency typical antipsychotics and a multivitamin every day. He has been compliant with his medication and has regular follow-up visits. What is the best first step in the management of this patient’s symptoms?
 
 A) Decrease medication dosage
@@ -116,6 +162,96 @@ A:
 5. Reassurance (Option B) is not sufficient without a proper evaluation of the cause of vision changes.
 6. Ocular examination under anesthesia (Option C) is typically reserved for more complex cases or when a detailed examination cannot be performed awake, which is not indicated initially in this scenario.
 7. **Therefore, the best first step is to conduct a slit-lamp examination (Option D) to assess the patient's ocular health.**
+
+```
+### Resultados preliminares - entrega 3
+
+#### Acurácia por separador 
+
+Acurácia em 50 amostras com agentes utilizando diferentes separadores de texto.
+
+|                 | **300/30** | **500/50** | **600/60** | **900/90** |
+|-----------------|------------|------------|------------|------------|
+| **BM25**        | 0.74       | 0.68       | 0.70       | 0.70       |
+| **Sim. Search** | 0.66       | 0.74       | 0.72       | 0.72       |
+
+
+#### Relecância dos contextos
+
+Relevância dos contextos recuperados por cada agente.
+
+|                 | **300/30** | **500/50** | **600/60** | **900/90** |
+|-----------------|------------|------------|------------|------------|
+| **BM25**        | 0.38       | 0.30       | 0.47       | 0.30       |
+| **Sim. Search** | 0.62       | 0.42       | 0.32       | 0.33       |
+
+#### Comparação inicial das abordagens
+
+Geração das respostas no dataset de teste e comparação com resultados obtidos no sistema sem acesso às bases de dados.
+
+![gráfico de acurácia](entrega3/results/results.png)
+
+#### Exemplo de respost ReAct
+
+```
+
+Q: A one-day-old male is evaluated in the hospital nursery for bilious vomiting. The patient has urinated multiple times since birth but has not yet passed meconium. He was born at 38 weeks gestation to a 36-year-old gravida 3 via vaginal delivery. The pregnancy was complicated by gestational diabetes. The patient’s mother received routine prenatal care and declined first trimester screening. She subsequently underwent a quadruple screen at 15 weeks gestation that demonstrated decreased maternal serum alpha-fetoprotein (AFP), increased beta-hCG, decreased unconjugated estriol, and increased inhibin A. Her last ultrasound prior to onset of labor demonstrated an amniotic fluid index (AFI) of 28 cm. The patient’s two older siblings are both healthy. The patient’s temperature is 97.8°F (36.6°C), blood pressure is 58/37 mmHg, pulse is 166/min, and respirations are 38/min. On physical exam, the patient is in moderate distress. His abdomen is firm and distended with hypoactive bowel sounds.
+Which of the following is the most likely etiology of this fetus’s presentation?
+Duodenal atresia
+Meconium ileus
+Necrotizing enterocolitis
+Pyloric stenosis
+
+A:
+
+To determine the most likely etiology of the one-day-old male's presentation, I need to analyze the symptoms and the clinical context provided. The key points from the case are:
+
+1. The patient is experiencing bilious vomiting and has not passed meconium.
+2. The abdomen is firm and distended with hypoactive bowel sounds.
+3. The mother had a quadruple screen that showed abnormal results, which could suggest a risk for certain congenital anomalies.
+
+A:
+
+Now, let's break down the options:
+
+- A: Duodenal atresia - This condition often presents with bilious vomiting and is associated with a lack of meconium passage. It is also linked with Down syndrome, which could correlate with the abnormal quad screen results.  
+- B: Meconium ileus - Typically associated with cystic fibrosis, it can cause bilious vomiting and delayed passage of meconium, but it is less common in newborns without a known history of cystic fibrosis.  
+- C: Necrotizing enterocolitis - This condition usually occurs in premature infants and presents with abdominal distension and feeding intolerance, but it is less likely in a healthy term infant.  
+- D: Pyloric stenosis - This condition usually presents with non-bilious vomiting and typically occurs in infants older than a few weeks.
+
+Given the symptoms of bilious vomiting and the absence of meconium, along with the mother's abnormal screening results, duodenal atresia seems to be the most consistent with the clinical picture.
+
+Action: search_docs  
+Action Input: "duodenal atresia presentation in newborns" 
+
+Duodenal atresia is found in approximately 1 in 10,000 births (Best, 2012; Dolk, 2010). It is characterized by the sonographic double-bubble sin, which represents distention of the stomach and the irst part of the duodenum (Fig. 10-38). This finding is usually not present before 22 to 24 weeks' gestation. Demonstrating continuity between the stomach and proximal duodenum confirms that the second "bubble" is the proximal duodenum. Approximately 30 percent of afected fetuses have an associated
+in the stomach and duodenum) proximal to the site of the atresia. Treatment: Surgical repair.
+I. DUODENAL ATRESIA
+A. Congenital failure of duodenum to canalize; associated with Down syndrome
+B. Clinical features 1.
+2.
+Distension of stomach and blind loop of duodenum ('double bubble' sign, Fig. 10.15) 3.
+II. MECKEL DIVERTICULUM
+A. Outpouching of all three layers of the bowel wall (true diverticulum, Fig. 10.16)
+B. Arises due to failure of the vitelline duct to involute
+C. 'Rule of 2s' 1.
+Seen in 2% of the population (most common congenital anomaly of the GI tract) 2.
+Available @ StudentConsult.com
+Congenital partial or complete blockage of the intestine is a developmental defect that occurs in about 1 in 1500 live births. Atresia occurs in several forms (Fig. 129-3). One ormore segments of bowel may be missing completely, theremay be varying degrees of obstruction caused by webs orstenosis, or there may be obliteration of the lumen in cord-like bowel remnants. The end result is obstruction withThe information gathered from the observation confirms the link between duodenal atresia and the clinical presentation of the one-day-old male. The key points reiterate that duodenal atresia is associated with bilious vomiting and failure to pass meconium, which aligns with the patient's symptoms. Additionally, the mention of the "double-bubble sign" further supports the diagnosis, as it indicates a blockage at the duodenum.
+
+Given the context of the mother's abnormal quad screen results, which can point towards congenital anomalies such as Down syndrome, and the clinical presentation of the infant, it strengthens the case for duodenal atresia as the most likely etiology.
+
+Now I will finalize the answer.
+
+Final Answer: A
+
+```
+
+#### Problemas e limitações
+
+Agentes não chegam a uma conclusão dentro do limite de iterações em parte das perguntas.
+
+Mesmo com acesso às informações, os contextos recuperados são de baixa relevância e, em muitos casos, não respondem à questão.
 
 
 ## Referências
