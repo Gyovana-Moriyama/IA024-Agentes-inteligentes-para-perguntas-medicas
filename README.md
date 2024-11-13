@@ -263,7 +263,7 @@ Mesmo com acesso às informações, os contextos recuperados são de baixa relev
 
 Acurácia em 50 amostras com agentes utilizando recuperadores baseados em modelos de embeddings pequenos (< 100M parâmetros).
 
-|                 |                         | **300/30** | **600/60** | **900/90** | **Acurácia média** |
+|                 | Retrievers              | **300/30** | **600/60** | **900/90** | **Avg accuracy**   |
 |-----------------|-------------------------|------------|------------|------------|--------------------|
 | **BM25**        |                         | 0.74       | 0.70       | 0.70       | 0.71               |
 | **Sim. Search** | all-MiniLM-L6-v2        | 0.66       | 0.72       | 0.72       | 0.70               |
@@ -274,7 +274,21 @@ Acurácia em 50 amostras com agentes utilizando recuperadores baseados em modelo
 
 Relevância dos contextos recuperados nas 50 amostras utilizando o modelo avsolatorio/GIST-small-Embedding-v0.
 
+|                       | **300/30** | **600/60** | **900/90** |
+|-----------------------|------------|------------|------------|
+| **Context relevance** | 0.71       | 0.54       | 0.60       |
 
+#### Melhor configuração
+
+Modelo GIST-small-Embedding-v0.
+Documentos segmentados com chunk_size de 300 e overlap de 30.
+
+#### Acurácia por prompt
+ Acurácia em 50 amostras coma gentes utilizando diferentes prompts.
+
+|              | **original** | **A2** | **A3** | **A4** | **A5** | **A6** | **B1** | **B2** | **B4** | **Act** |
+|--------------|--------------|--------|--------|--------|--------|--------|--------|--------|--------|---------|
+| **Accuracy** | **0.78**     | 0.72   | 0.56   | 0.72   | 0.72   | 0.66   | 0.34   | 0.42   | 0.28   | 0.0     |
 
 ## Referências
 
