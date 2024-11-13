@@ -290,6 +290,14 @@ Documentos segmentados com chunk_size de 300 e overlap de 30.
 |--------------|--------------|--------|--------|--------|--------|--------|--------|--------|--------|---------|
 | **Accuracy** | **0.78**     | 0.72   | 0.56   | 0.72   | 0.72   | 0.66   | 0.34   | 0.42   | 0.28   | 0.0     |
 
+#### Comparação geral das abordagens
+
+![gráfico de acurácia](entrega4/results/all.png)
+
+#### Comparação das abordagens por etapa do exame
+
+![gráfico de acurácia](entrega4/results/step.png)
+
 ## Referências
 
 [1] Wu, Chaoyi, et al. "PMC-LLaMA: toward building open-source language models for medicine." Journal of the American Medical Informatics Association (2024): ocae045.
