@@ -90,7 +90,11 @@ A parte de _reasoning_, ou seja, a parte do racicínio é baseada no CoT. Já a 
 
 O RAG implementado utiliza o _RecursiveCharacterTextSplitter_ do _Langchain_ como separador de texto e Similarity Search do FAISS como recuperador de informação.
 
-Para a escolha do recuperador de informação de da melhor configuração do separador, foram feitas comparações utilizando 50 perguntas aleaórias da amostra do dataset de treino. Foi comparado combinações de _chunk_size_ e _overlap_size_ do separador de texto com dois recuperadores, o Similarity Search do FAISS e o BM25 Okapi. Para avaliar essas combinações, foi utlizada a acurácia nas questões e o _context relevance_ com RAGAS nos contextos recuperados.
+Para a escolha do recuperador de informação da melhor configuração do separador, foram feitas comparações utilizando 50 perguntas aleaórias da amostra do dataset de treino. Foi comparado combinações de _chunk_size_ e _overlap_size_ do separador de texto com dois recuperadores, o Similarity Search do FAISS e o BM25 Okapi. Para avaliar essas combinações, foi utlizada a acurácia nas questões e o _context relevance_ com RAGAS nos contextos recuperados.
+
+Para a escolha do melhor modelo de embedding, assim como a análise anterior, foi feita a comparação da acurácia dos modelos utilizando 50 perguntas aleatórias do dataset de treino.
+
+Finalmente, ainda foi feita uma comparação com diversos prompts para o ReAct.
 
 Prompt ReAct:
 
@@ -252,6 +256,24 @@ Final Answer: A
 Agentes não chegam a uma conclusão dentro do limite de iterações em parte das perguntas.
 
 Mesmo com acesso às informações, os contextos recuperados são de baixa relevância e, em muitos casos, não respondem à questão.
+
+### Resultados finais
+
+#### Acurácia por recuperador
+
+Acurácia em 50 amostras com agentes utilizando recuperadores baseados em modelos de embeddings pequenos (< 100M parâmetros).
+
+|                 |                         | **300/30** | **600/60** | **900/90** | **Acurácia média** |
+|-----------------|-------------------------|------------|------------|------------|--------------------|
+| **BM25**        |                         | 0.74       | 0.70       | 0.70       | 0.71               |
+| **Sim. Search** | all-MiniLM-L6-v2        | 0.66       | 0.72       | 0.72       | 0.70               |
+|                 | GIST-small-Embedding-v0 | 0.78       | 0.78       | 0.76       | **0.77**           |
+|                 | snowflake-artic-embed-m | -          | 0.66       | -          | -                  |
+
+#### Relevância dos contextos
+
+Relevância dos contextos recuperados nas 50 amostras utilizando o modelo avsolatorio/GIST-small-Embedding-v0.
+
 
 
 ## Referências
