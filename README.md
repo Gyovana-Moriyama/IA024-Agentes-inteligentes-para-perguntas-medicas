@@ -292,11 +292,11 @@ Documentos segmentados com chunk_size de 300 e overlap de 30.
 
 #### Comparação geral das abordagens
 
-![gráfico de acurácia](entrega4/results/all.png)
+![gráfico de acurácia](entrega4/all.png)
 
 #### Comparação das abordagens por etapa do exame
 
-![gráfico de acurácia](entrega4/results/step.png)
+![gráfico de acurácia](entrega4/step.png)
 
 ## Referências
 
