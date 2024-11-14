@@ -290,13 +290,38 @@ Documentos segmentados com chunk_size de 300 e overlap de 30.
 |--------------|--------------|--------|--------|--------|--------|--------|--------|--------|--------|---------|
 | **Accuracy** | **0.78**     | 0.72   | 0.56   | 0.72   | 0.72   | 0.66   | 0.34   | 0.42   | 0.28   | 0.0     |
 
+Variações tiveram desempenho inferior ao do prompt original:
+
+*  Instruir divisão da pergunta em subproblemas no passo de raciocínio;
+*  Especificar detalhadamente o formato de saída desejado;
+*  Simplificar os termos de busca utilizados, ou limitar o número de termos.
+
+Somente os dados dos documentos recuperados (sem passo de reasoning) não são suficientes para responder às perguntas, uma vez que as informações recuperadas são pouco relevantes para responder à pergunta e o agente fundamenta suas respostas muito mais no próprio conhecimento do que em informações recuperadas.
+
 #### Comparação geral das abordagens
 
 ![gráfico de acurácia](entrega4/all.png)
 
+Abordagens escolhidas são muito simples em relação aos melhores modelos (que envolvem prompts especializados e fine-tuning).
+
+Mesmo sem ser instruído, modelo utiliza lógica semelhante à de chain-of-thought ao ser questionado diretamente. Quando CoT utilizado no agente, raciocínio gerado na etapa de reasoning domina a resposta, e os contextos recuperados apenas fortalecem suposições pré-estabelecidas.
+
+
 #### Comparação das abordagens por etapa do exame
 
 ![gráfico de acurácia](entrega4/step.png)
+
+Conhecimentos exigidos por cada etapa são diferentes (1: fundamentos, 2 e 3: conhecimento clínico, diagnóstico e tratamentos), mas não há diferença expressiva no desempenho entre métodos ou fases.
+
+#### Análise das respostas de cada método
+
+Ambos os sistemas (Cot e ReAct) acertaram 834 perguntas e ambos erraram 216.
+
+Das 216 respostas incorretas, ambos os sistemas deram a mesma resposta em 165 delas. Nessas perguntas, observa-se que o método se apoia principalmente no raciocínio (reasoning), com pouco uso da busca. Nas outras 51 perguntas, há casos em que o sistema ReAct não chega a uma resposta ou, mesmo utilizando a busca, não consegue obter uma resposta correta.
+
+## Conclusões
+
+## Trabalhos futuros
 
 ## Referências
 
