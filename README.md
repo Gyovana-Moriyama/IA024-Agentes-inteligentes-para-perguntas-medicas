@@ -329,7 +329,7 @@ Possíveis trabalhos futuros seriam:
 
 *  Aprimorar a Relevância da Recuperação de Contextos: Investir em métodos de recuperação mais avançados ou personalizados, como técnicas de re-ranking ou recuperação baseada em embeddings treinados especificamente para o domínio médico. Testar modelos maiores ou com ajuste fino (fine-tuning) para capturar melhor a relevância dos contextos e trazer informações mais alinhadas com as perguntas.
 
-*  Explorar Métodos de Hibridização entre CoT e ReAct: Desenvolver uma abordagem híbrida que selecione dinamicamente entre o raciocínio (CoT) e a busca externa (ReAct) com base nas características de cada pergunta. Isso pode incluir o uso de heurísticas ou um modelo de decisão que identifique quando o uso de um método é mais vantajoso que o outro, aumentando a precisão e a eficiência.
+*  Explorar Métodos de Flexibilização entre CoT e ReAct: Desenvolver uma abordagem híbrida que selecione dinamicamente entre o raciocínio (CoT) e a busca externa (ReAct) com base nas características de cada pergunta. Isso pode incluir o uso de heurísticas ou um modelo de decisão que identifique quando o uso de um método é mais vantajoso que o outro, aumentando a precisão e a eficiência.
 
 *  Avaliação e Expansão da Base de Conhecimento Médica: Atualizar e ampliar a base de conhecimento utilizada na recuperação de contextos, integrando fontes confiáveis e recentes. Isso é particularmente importante no campo médico, onde o conhecimento evolui rapidamente. Essa atualização pode incluir bases de dados de guidelines clínicas atualizadas e novas publicações médicas para garantir respostas precisas e atualizadas.
 
