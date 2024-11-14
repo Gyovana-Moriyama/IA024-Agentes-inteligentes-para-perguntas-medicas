@@ -321,7 +321,17 @@ Das 216 respostas incorretas, ambos os sistemas deram a mesma resposta em 165 de
 
 ## Conclusões
 
+Em resumo, o trabalho comparou a eficácia de dois métodos, ReAct e Chain-of-Thought (CoT), em responder perguntas do exame médico USMLE. Embora ambos os sistemas tenham demonstrado capacidade de raciocínio clínico, o ReAct teve um desempenho marginalmente superior ao CoT. Esse resultado destaca o valor adicional de integrar busca externa para lidar com questões complexas e específicas do domínio médico, permitindo ao sistema acessar informações mais atualizadas e contextualizadas. No entanto, observou-se que, em muitas questões, o modelo ainda se apoia mais no raciocínio interno do que nas informações recuperadas, o que aponta para melhorias potenciais na relevância dos contextos recuperados e no equilíbrio entre uso de raciocínio e busca. Assim, o estudo reforça a importância de uma recuperação de dados otimizada para aprimorar a precisão de sistemas de resposta a perguntas em domínios especializados, como o médico.
+
 ## Trabalhos futuros
+
+Possíveis trabalhos futuros seriam:
+
+*  Aprimorar a Relevância da Recuperação de Contextos: Investir em métodos de recuperação mais avançados ou personalizados, como técnicas de re-ranking ou recuperação baseada em embeddings treinados especificamente para o domínio médico. Testar modelos maiores ou com ajuste fino (fine-tuning) para capturar melhor a relevância dos contextos e trazer informações mais alinhadas com as perguntas.
+
+*  Explorar Métodos de Hibridização entre CoT e ReAct: Desenvolver uma abordagem híbrida que selecione dinamicamente entre o raciocínio (CoT) e a busca externa (ReAct) com base nas características de cada pergunta. Isso pode incluir o uso de heurísticas ou um modelo de decisão que identifique quando o uso de um método é mais vantajoso que o outro, aumentando a precisão e a eficiência.
+
+*  Avaliação e Expansão da Base de Conhecimento Médica: Atualizar e ampliar a base de conhecimento utilizada na recuperação de contextos, integrando fontes confiáveis e recentes. Isso é particularmente importante no campo médico, onde o conhecimento evolui rapidamente. Essa atualização pode incluir bases de dados de guidelines clínicas atualizadas e novas publicações médicas para garantir respostas precisas e atualizadas.
 
 ## Referências
 
